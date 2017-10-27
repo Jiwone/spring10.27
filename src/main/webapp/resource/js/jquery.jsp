@@ -52,7 +52,7 @@
 	      });
 	   });
 
-	 //--자식노드변경예제 -->
+	 //--자식노드변경예제   ㄴ-->
 	  $(function() {
 	      var chNodeButton = $("#ch-node-button");
 	      var container = $("#ch-node-container");   
