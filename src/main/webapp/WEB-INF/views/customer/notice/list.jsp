@@ -42,6 +42,7 @@
 							<th class="w100">작성자</th>
 							<th class="w100">작성일</th>
 							<th class="w60">조회수</th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -51,11 +52,12 @@
 						<td class="title indent"><a href="notice/${n.id}">${n.title}</a></td>
 						<td>${n.writerName}</td>
 						<td>
-							<fmt:formatDate pattern="yyyy-MM-dd" value="2017-02-28"/>		
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${n.regDate}"/>   		
 						</td>
 						<td>${n.hit}</td>
 					</tr>
 					</c:forEach>
+					<td>${count.count}</td>
 					</tbody>
 				</table>
 			</div>

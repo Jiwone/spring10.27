@@ -2,21 +2,43 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<!-- core -->
-	<bean id="target" class="com.snr.aop.spring.NewlecCalculator"/>
-	
-	<!-- handler -->
-	<bean id="handler" class="com.snr.aop.spring.LogHandler"/>
-	
-	<!-- proxy -->
-	<bean class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="target" ref="target"/>
-		<property name="interceptorNames">
-			<list>
-				<value>handler</value>
-			</list>
-		</property>
-	</bean>
 
+
+<!-- core 원래 주업무 부분 -->
+<bean id = "target" class="com.snr.aop.spring.NewlecCalculator"/>
+
+<!-- handler -->
+<bean id ="handler" class="com.snr.aop.spring.LogHandler"/>
+<bean id ="before" class="com.snr.aop.spring.BeforeHandler"/>
+<bean id ="after" class="com.snr.aop.spring.AfterHandler"/>
+<bean id ="throwing" class="com.snr.aop.spring.ThrowingHandler"/>
+
+<!-- Pointcuts -->
+<bean id="methodNamePointcut" class ="org.springframework.aop.support.NameMatchMethodPointcut">
+	<property name="mappedName" value="add"/>
+</bean>
+
+<!-- advisor -->
+<bean id="methodNameAdvisor"
+	class="org.springframework.aop.support.DefaultPointcutAdvisor">
+	<property name="pointcut" ref="methodNamePointcut"/>
+	<property name="advice" ref="before" />
+</bean>
+
+<!-- proxy -->
+<bean id="cal" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<property name="target"	ref="target"/>
+	<property name="interceptorNames">
+	<list>
+		<value>methodNameAdvisor</value>
+		<!-- <value>handler</value>
+		<value>before</value>
+		<value>after</value>
+		<value>throwing</value> -->
+	</list>
+	
+	</property>
+	
+
+</bean>
 </beans>

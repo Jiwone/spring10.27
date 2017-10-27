@@ -29,6 +29,7 @@ public class CustomerController {
 			Model model) {
 		
 		model.addAttribute("list", noticeDao.getList(page, field, query));
+		model.addAttribute("count",noticeDao.getCount());
 		
 		return "customer.notice.list";
 	}
@@ -48,6 +49,13 @@ public class CustomerController {
 		Gson gson = new Gson();
 		json = gson.toJson(list);
 		
+		try {
+			Thread.sleep(3000);
+		}
+		catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		return json;
 	}
 	
@@ -55,8 +63,8 @@ public class CustomerController {
 	public String detail(@PathVariable("id") String id, Model model) {
 		
 		model.addAttribute("n", noticeDao.get(id));
-		model.addAttribute("prev", noticeDao.getPrev(id));
-		model.addAttribute("next", noticeDao.getNext(id));
+	//	model.addAttribute("prev", noticeDao.getPrev(id));
+	//	model.addAttribute("next", noticeDao.getNext(id));
 		
 		return "customer.notice.detail";
 	}

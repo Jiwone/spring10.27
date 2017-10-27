@@ -12,6 +12,7 @@ public class Member {
    private String phone;
    private String email;
    private Date regDate;
+   private int point;
 
    public Member(String id, String pwd, String name, String gender, String birthday, String phone,String email) {
       super();
@@ -23,7 +24,6 @@ public class Member {
       this.phone = phone;
       this.email = email;
    }
-   
    
 
    public Member() {
@@ -139,6 +139,15 @@ public class Member {
       this.regDate = regDate;
    }
 
+   public int getPoint() {
+	return point;
+   }
+
+
+
+   public void setPoint(int point) {
+	this.point = point;
+   }
 
 
 

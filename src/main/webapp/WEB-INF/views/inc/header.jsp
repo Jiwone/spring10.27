@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -51,14 +54,32 @@
 					<ul>
 						<li><a href="${ctx}/index">HOME</a></li>
 
-						<c:if test="${empty pageContext.request.userPrincipal}">
+					<security:authorize access="!hasRole('ROLE_USER')">
+						<li><a href="${ctx}/member/login">로그인</a></li>
+					</security:authorize>
+						<%-- <c:if test="${empty pageContext.request.userPrincipal}">
 							<li><a href="${ctx}/member/login">로그인</a></li>
-						</c:if>
-						<c:if test="${not empty pageContext.request.userPrincipal}">
-							<li><a href="${ctx}/j_spring_security_logout"> <%-- ${pageContext.request.userPrincipal.name}님 로그아웃 --%>
-									<%-- <security:authentication property="name"/>님  --%>로그아웃
+						</c:if> --%>
+						
+					<security:authorize access="hasRole('ROLE_USER')">
+					<li>
+				<%-- 	<c:url var="logout" value="/logout" />
+						<form action="${logout}"> --%>
+						<form action="${ctx}/logout" method="post">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"  />
+							<input type="submit" value="로그아웃"/>
+						
+						</form>
+					<%-- 	<li><a href="${ctx}/logout"> 
+							<security:authentication property="name"/>님 로그아웃 --%>
+					</li>
+					</security:authorize>
+						
+						<%-- <c:if test="${not empty pageContext.request.userPrincipal}">
+							<li><a href="${ctx}/j_spring_security_logout"> ${pageContext.request.userPrincipal.name}님 로그아웃
+									<security:authentication property="name"/>님 로그아웃
 							</a></li>
-						</c:if>
+						</c:if> --%>
 
 						<li><a href="${ctx}/member/agree">회원가입</a></li>
 					</ul>
